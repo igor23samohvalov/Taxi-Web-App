@@ -8,4 +8,4 @@ const RequireAuth = ({ children }) => {
   // return children;
 }
 
-export default RequireAuth
+export default RequireAuth     

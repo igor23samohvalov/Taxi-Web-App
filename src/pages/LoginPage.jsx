@@ -1,25 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, Box, TextField, Button, Typography, } from '@mui/material';
+import { Grid, Box, TextField, Typography, Button, Paper } from '@mui/material';
+import frontLogo from '../assets/images/front-logo.png';
 
 const LoginPage = () => {
   return (
-    <Grid container sx={{ height: "100%" }}>
+    <Grid container sx={{ height: 1 }}>
       <Grid item container xs={4} justifyContent="center" alignContent="center">
-
+        <img src={frontLogo}  alt="Taxi Logo" />
       </Grid>
-      <Grid item container xs={8} sx={{ bgcolor: '#F6F6F4' }} justifyContent="center" alignContent="center">
-          <Grid item sx={{ width: 1/2, height: 1/2, bgcolor: '#fff', px: 10, py: 7 }}>
-            <Box component="form" sx={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column', alignItems: 'center', height: 1 }}>
+      <Grid item container className='loginpage-container' xs={8} justifyContent="center" alignContent="center">
+          <Paper sx={{ width: 0.4, height: 0.4, py: 5, borderRadius: '20px' }} elevation={6}>
+            <Box component="form" sx={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column', px: 10, alignItems: 'center', height: 1 }}>
               <Typography variant="h4">Войти</Typography>
-              <div>
-                <TextField id="loginUsername" label="Имя пользователя" variant="standard" margin="dense" fullWidth  />
+              <div style={{ width: '100%' }}>
+                <TextField id="loginUsername" label="Имя пользователя" variant="standard" margin="dense" fullWidth />
                 <TextField id="loginPassword" label="Пароль" variant="standard" margin="dense" fullWidth />
               </div>
-              <Button variant="contained" sx={{ bgcolor: '#FDBF5A' }} fullWidth>Войти</Button>
-              <Typography variant="body1">Новый пользователь? <Link to="/signup" color="#FDBF5A" underline="none">Зарегистрируйтесь</Link></Typography>
+              <Button sx={{ borderRadius: '40px', fontSize: '1.3rem', bgcolor: '#FDBF5A' }} variant="contained" fullWidth>Войти</Button>
+              <Typography variant="body1">Новый пользователь? <Link to="/signup" style={{ color: "#FDBF5A", textDecoration: "none" }}>Зарегистрируйтесь</Link></Typography>
             </Box>
-          </Grid>
+          </Paper>
       </Grid>
     </Grid>
   )
