@@ -1,22 +1,23 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Layout from './components/Layout.jsx';
-import SignupPage from './pages/SignupPage';
+import { Navigate, Route, Routes } from 'react-router';
+import { AuthProvider } from './hoc/AuthProvider.jsx';
 import MainPage from './pages/MainPage';
 import RequireAuth from './hoc/RequireAuth.jsx';
 import LoginPage from './pages/LoginPage.jsx';
+import LoginForm from './components/LoginForm.jsx';
+import SignupForm from './components/signupForm.jsx';
 
 const App = () => {
 
   return (
-    <BrowserRouter>
+    <AuthProvider>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index path="/" element={<RequireAuth><MainPage /></RequireAuth>} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+        <Route path="/" element={<RequireAuth><MainPage /></RequireAuth>} />
+        <Route path="/*" element={<LoginPage />}>
+          <Route path="login" element={<LoginForm />} />
+          <Route path="signup" element={<SignupForm />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </AuthProvider>
   );
 }
 

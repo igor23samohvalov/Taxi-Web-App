@@ -17,3 +17,30 @@ code {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.orderForm {
+  position: absolute;
+  top: 15%;
+  left: 5%;
+}
+
+.autoCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 5px 10px;
+  width: 24%;
+}
+
+.autoCard > img {
+  height: 72px;
+  align-self: center;
+}
+
+.profileForm {
+  position: absolute;
+  top: 30%;
+  left: 25%;
+  width: 50%;
+  height: 40%;
+}

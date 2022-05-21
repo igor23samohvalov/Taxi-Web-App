@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import React, { useRef, useEffect, useState } from 'react';
-import OrderForm from './OrderForm';
+import OrderForm from './OrderForm.jsx';
+import Profile from './Profile.jsx'
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
 
@@ -12,15 +13,15 @@ function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
-  const [zoom, setZoom] = useState(9);
+  const [lng, setLng] = useState(30.32);
+  const [lat, setLat] = useState(59.95);
+  const [zoom, setZoom] = useState(11);
 
   useEffect(() => {
     if (map.current) return;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: 'mapbox://styles/mapbox/light-v10',
       center: [lng, lat],
       zoom: zoom
       });
@@ -36,9 +37,11 @@ function Map() {
   });
 
   return (
-    <Box ref={mapContainer} sx={{ width: 1, height: 0.925, bgcolor: '#eeeee4' }}>
+    <>
+      <Box ref={mapContainer} sx={{ width: 1, height: 0.925, bgcolor: '#eeeee4' }} />
       {/* <OrderForm /> */}
-    </Box>
+      {/* <Profile /> */}
+    </>
   )
 }
 

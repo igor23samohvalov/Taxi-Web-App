@@ -3,9 +3,9 @@ import { Navigate } from 'react-router-dom';
 
 
 const RequireAuth = ({ children }) => {
+  if (!localStorage.getItem('token')) return <Navigate to="/login" />
 
-  return <Navigate to="/login" />;
-  // return children;
+  return children;
 }
 
 export default RequireAuth     
