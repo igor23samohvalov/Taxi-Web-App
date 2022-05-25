@@ -34,7 +34,7 @@ function LoginForm() {
         data: JSON.stringify(auth),
       })
       .then(({ data }) => localStorage.setItem('token', JSON.stringify(data.token)))
-      .then(() => navigate('/'))
+      .then(() => navigate('/main'))
     },
   });
 

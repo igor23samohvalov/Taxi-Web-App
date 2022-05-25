@@ -44,3 +44,13 @@ code {
   width: 50%;
   height: 40%;
 }
+
+.active {
+  color: rgb(253, 191, 90);
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}

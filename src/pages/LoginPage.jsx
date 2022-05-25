@@ -1,9 +1,13 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Grid, Paper, Container } from '@mui/material';
 import frontLogo from '../assets/images/front-logo.png';
 
 function LoginPage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem('token')) navigate('/main')
+  }, [navigate])
 
   return (
     <Container maxWidth="false" sx={{ bgcolor: '#1C1A19', height: '100vh'}} disableGutters={true}>

@@ -2,10 +2,17 @@ import React from 'react';
 import {
   Grid, Box, TextField, Button, Typography, Paper
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 import profileLogo from '../assets/images/subtract-profile.png';
 import profileVisa from '../assets/images/visa-profile.png';
 
 function Profile() {
+  const {
+    cardName, expiryDate, cardNumber, cvc
+  } = useSelector((state) => state.cardData.cardData);
+
+  const formattedDate = `${expiryDate.slice(0, 2)}/${expiryDate.slice(2)}`;
+
   return (
     <Paper className="profileForm" sx={{ py: 3, px: 2, borderRadius: '10px' }}>
       <Grid container spacing={4} justifyContent="center" alignItems="space-between" sx={{ height: 1 }}>
@@ -31,6 +38,7 @@ function Profile() {
                   id="profileName"
                   label="Имя владельца"
                   variant="standard"
+                  value={cardName}
                   margin="dense"
                   fullWidth 
                 />
@@ -39,6 +47,7 @@ function Profile() {
                 <TextField
                   id="profileCardNumber"
                   label="Номер карты"
+                  value={cardNumber}
                   variant="standard"
                   type="number"
                   fullWidth
@@ -48,6 +57,7 @@ function Profile() {
                 <TextField
                   id="data"
                   label="MM/YY"
+                  value={formattedDate}
                   variant="standard"
                   fullWidth
                 />
@@ -56,6 +66,7 @@ function Profile() {
                 <TextField
                   id="CVC"
                   label="CVC"
+                  value={cvc}
                   variant="standard"
                   fullWidth
                 />
@@ -68,10 +79,10 @@ function Profile() {
             <Grid container justifyContent="space-between" sx={{ height: 1 }}>
               <Grid item container xs={12} justifyContent="space-between">
                 <img src={profileLogo} alt="Taxi Logo" width="33px" height="33px" />
-                <span>NaN/aN</span>
+                <span>{formattedDate}</span>
               </Grid>
               <Grid item xs={12} justifyContent="flex-start" alignSelf="center">
-                234234234
+                {cardNumber}
               </Grid>
               <Grid item container xs={12} justifyContent="space-between" alignSelf="flex-end">
               <img src={profileVisa} alt="Visa Logo" />

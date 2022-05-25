@@ -11,11 +11,15 @@ const App = () => {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/" element={<RequireAuth><MainPage /></RequireAuth>} />
-        <Route path="/*" element={<LoginPage />}>
-          <Route path="login" element={<LoginForm />} />
+        <Route path="/" element={<LoginPage />}>
+          <Route index element={<LoginForm />} />
           <Route path="signup" element={<SignupForm />} />
         </Route>
+        <Route path="main/*" element={
+          <RequireAuth>
+            <MainPage />
+          </RequireAuth>} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </AuthProvider>
   );

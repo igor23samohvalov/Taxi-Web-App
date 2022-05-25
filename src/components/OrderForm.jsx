@@ -1,12 +1,16 @@
 import React from 'react';
 import {
-  Box, Button, TextField, Paper, Grid,
+  Box, Button, TextField, Paper, Grid, MenuItem,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 import buisnessCar from '../assets/images/car-buiseness.png';
 import standartCar from '../assets/images/card-standart.png';
 import premiumCar from '../assets/images/car-premium.png';
 
+
 function OrderForm() {
+  const addresses = useSelector((state) => state.addresses.addresses);
+
   return (
     <Paper 
       className="orderForm"
@@ -27,34 +31,30 @@ function OrderForm() {
         <TextField
           id="whereFrom"
           select
-          label="Откуда"
-          // value={currency}
-          // onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
+          helperText="Откуда"
+          defaultValue=""
           variant="standard"
           fullWidth
         >
-          <option value="Пулково (LED)">
-            Пулково (LED)
-          </option>
+          {addresses.map((address, i) => (
+            <MenuItem key={i} value={address}>
+              {address}
+            </MenuItem>
+          ))}
         </TextField>
         <TextField
           id="whereTo"
           select
-          label="Куда"
-          // value={currency}
-          // onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
+          helperText="Куда"
+          defaultValue=""
           variant="standard"
           fullWidth
         >
-          <option value="Пулково (LED)">
-            Пулково (LED)
-          </option>
+          {addresses.map((address, i) => (
+            <MenuItem key={i} value={address}>
+              {address}
+            </MenuItem>
+          ))}
         </TextField>
         <Grid container justifyContent="space-between" sx={{ px: 2 }}>
           <Paper className="autoCard" elevation={4} sx={{ borderRadius: '20px' }}>

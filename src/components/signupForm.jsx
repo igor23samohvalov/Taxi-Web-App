@@ -23,6 +23,8 @@ const validationSchema = yup.object({
 });
 
 function SignupForm() {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -32,7 +34,27 @@ function SignupForm() {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values)
+      console.log(formik.errors.email)
+      axios({
+        method: 'post',
+        url: 'https://loft-taxi.glitch.me/register',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(values),
+      })
+      .then((response) => {
+        if (!response.data.success) {
+          formik.setFieldError('email', response.data.error)
+        } else {
+          localStorage.setItem('token', JSON.stringify(response.data.token))
+          navigate('/')
+        }
+      })
+      .catch((error) => {
+        console.log(error.message)
+        formik.setFieldError('password', 'Ошибка сети')
+      })
     },
   });
 
@@ -108,7 +130,7 @@ function SignupForm() {
         Зарегистрироваться
       </Button>
       <Typography variant="body1">Уже зарегистрированы?
-        <Link to="/login" style={{ color: "#FDBF5A", textDecoration: "none" }}>
+        <Link to="/" style={{ color: "#FDBF5A", textDecoration: "none" }}>
           Войти
         </Link>
       </Typography>

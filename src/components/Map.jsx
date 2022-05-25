@@ -1,7 +1,5 @@
 import { Box } from '@mui/material';
 import React, { useRef, useEffect, useState } from 'react';
-import OrderForm from './OrderForm.jsx';
-import Profile from './Profile.jsx'
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
 
@@ -37,11 +35,7 @@ function Map() {
   });
 
   return (
-    <>
-      <Box ref={mapContainer} sx={{ width: 1, height: 0.925, bgcolor: '#eeeee4' }} />
-      {/* <OrderForm /> */}
-      {/* <Profile /> */}
-    </>
+    <Box ref={mapContainer} sx={{ width: 1, height: 0.925, bgcolor: '#eeeee4' }} />
   )
 }
 
