@@ -32,6 +32,11 @@ code {
   width: 24%;
 }
 
+.autoCard:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
 .autoCard > img {
   height: 72px;
   align-self: center;
@@ -53,4 +58,8 @@ code {
 a {
   text-decoration: none;
   color: #fff;
+}
+
+.opacity {
+  opacity: 0.6;
 }

@@ -7,7 +7,7 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic2FuZHlwbGFua3RvbiIsImEiOiJjbDNjcG9sejMwMDB4M
 
 
 
-function Map() {
+function Map({ setMap }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
@@ -22,7 +22,8 @@ function Map() {
       style: 'mapbox://styles/mapbox/light-v10',
       center: [lng, lat],
       zoom: zoom
-      });
+    });
+    setMap(map.current);
   });
 
   useEffect(() => {

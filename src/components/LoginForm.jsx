@@ -78,9 +78,17 @@ function LoginForm() {
         />
       </div>
       <Button 
-        sx={{ borderRadius: '40px', fontSize: '1.3rem', bgcolor: '#FDBF5A' }}
         variant="contained"
         type="submit"
+        sx={{
+          borderRadius: '40px',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          bgcolor: '#FDBF5A',
+          '&:hover': {
+            backgroundColor: '#FFA842',
+          }
+        }}
         fullWidth
       >
         Войти

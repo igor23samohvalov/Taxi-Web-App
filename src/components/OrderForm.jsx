@@ -1,20 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box, Button, TextField, Paper, Grid, MenuItem,
 } from '@mui/material';
+import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useFormik } from 'formik';
 import buisnessCar from '../assets/images/car-buiseness.png';
 import standartCar from '../assets/images/card-standart.png';
 import premiumCar from '../assets/images/car-premium.png';
+import { drawRoute } from '../utilityFns/drawRoute';
+import OrderDone from './OrderDone.jsx';
+
+const carOptions = [
+  {
+    class: 'Стандарт',
+    price: '150р',
+    image: standartCar,
+  },
+  {
+    class: 'Бизнес',
+    price: '250р',
+    image: buisnessCar,
+  },
+  {
+    class: 'Премиум',
+    price: '350р',
+    image: premiumCar,
+  },
+]
 
 
-function OrderForm() {
+function OrderForm({ mapLink }) {
   const addresses = useSelector((state) => state.addresses.addresses);
+  const [activeCar, setActiveCar] = useState(0);
+  const [isOrderDone, setOrderDone] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      whereFrom: '',
+      whereTo: '',
+    },
+    onSubmit: async ({ whereFrom, whereTo}) => {
+      const response = await axios.get(`https://loft-taxi.glitch.me/route?address1=${whereFrom}&address2=${whereTo}`);
+      drawRoute(mapLink, response.data);
+      setOrderDone(true);
+    }
+  })
+  if (isOrderDone) return <OrderDone />
 
   return (
     <Paper 
       className="orderForm"
-      sx={{ width: 0.3, height: 0.4, py: 2, borderRadius: '20px'}}
+      sx={{ width: 0.3, height: 0.5, py: 2, borderRadius: '20px'}}
       elevation={6}
     >
       <Box 
@@ -27,12 +64,15 @@ function OrderForm() {
           px: 5,
           height: 1
         }}
+        onSubmit={formik.handleSubmit}
       >
         <TextField
           id="whereFrom"
+          name="whereFrom"
           select
-          helperText="Откуда"
-          defaultValue=""
+          label="Откуда"
+          value={formik.values.whereFrom}
+          onChange={formik.handleChange}
           variant="standard"
           fullWidth
         >
@@ -44,9 +84,11 @@ function OrderForm() {
         </TextField>
         <TextField
           id="whereTo"
+          name="whereTo"
           select
-          helperText="Куда"
-          defaultValue=""
+          label='Куда'
+          value={formik.values.whereTo}
+          onChange={formik.handleChange}
           variant="standard"
           fullWidth
         >
@@ -57,28 +99,34 @@ function OrderForm() {
           ))}
         </TextField>
         <Grid container justifyContent="space-between" sx={{ px: 2 }}>
-          <Paper className="autoCard" elevation={4} sx={{ borderRadius: '20px' }}>
-            <p>Стандарт</p>
-            <span>Стоимость</span>
-            <p>150Р</p>
-            <img src={standartCar} alt="Buisness Car"/>
-          </Paper>
-          <Paper className="autoCard" elevation={4} sx={{ borderRadius: '20px' }}>
-            <p>Бизнес</p>
-            <span>Стоимость</span>
-            <p>250Р</p>
-            <img src={buisnessCar} alt="Buisness Car"/>
-          </Paper>
-          <Paper className="autoCard" elevation={4} sx={{ borderRadius: '20px' }}>
-            <p>Премиум</p>
-            <span>Стоимость</span>
-            <p>350Р</p>
-            <img src={premiumCar} alt="Buisness Car"/>
-          </Paper>
+          {carOptions.map((car, i) => (
+            <Paper 
+              key={i}
+              elevation={4}
+              className={i === activeCar ? 'autoCard' : 'autoCard opacity'}
+              onClick={() => setActiveCar(i)}
+              sx={{ borderRadius: '20px', overflow: 'hidden', height: '170px' }}
+            >
+              <b>{car.class}</b>
+              <span>Стоимость</span>
+              <i>{car.price}</i>
+              <img src={car.image} alt={car.class} />
+            </Paper>
+          ))}
         </Grid>
         <Button
           variant="contained"
-          sx={{ bgcolor: '#FDBF5A', borderRadius: '40px', py: '15px' }}
+          type="submit"
+          sx={{
+            borderRadius: '40px',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            bgcolor: '#FDBF5A',
+            '&:hover': {
+              backgroundColor: '#FFA842',
+            },
+            py: '15px',
+          }}
           fullWidth
         >
           Заказать

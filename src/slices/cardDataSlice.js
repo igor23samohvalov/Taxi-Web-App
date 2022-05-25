@@ -34,5 +34,5 @@ const cardDataSlice = createSlice({
   }
 })
 
-export const { setCardData } = cardDataSlice.actions;
+export const { actions } = cardDataSlice;
 export default cardDataSlice.reducer;

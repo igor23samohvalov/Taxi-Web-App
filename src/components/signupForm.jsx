@@ -122,7 +122,15 @@ function SignupForm() {
         />
       </div>
       <Button
-        sx={{ borderRadius: '40px', fontSize: '1.3rem', bgcolor: '#FDBF5A' }}
+        sx={{
+          borderRadius: '40px',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          bgcolor: '#FDBF5A',
+          '&:hover': {
+            backgroundColor: '#FFA842',
+          }
+        }}
         variant="contained"
         type="submit"
         fullWidth

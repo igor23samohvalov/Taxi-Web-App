@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, AppBar, Toolbar, Typography, Grid } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import lcLogo from '../assets/images/lc-logo.png'
 
 const Header = () => {
@@ -12,7 +12,7 @@ const Header = () => {
         
         <Toolbar style={{ justifyContent: "space-between" }} >
           <Grid>
-            <img src={lcLogo} alt="Login Logo" />
+            <Link to=""><img src={lcLogo} alt="Login Logo" /></Link> 
           </Grid>
           <Grid style={{ display: 'flex' }}>
             <Typography variant="body1" component="div" sx={{ mx: 2 }}>

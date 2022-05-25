@@ -11,7 +11,7 @@ import Profile from '../components/Profile';
 
 const MainPage = () => {
   const dispatch = useDispatch();
-  const [ activeMenuId, setActiveMenu ] = useState(1)
+  const [mapLink, setMapLink] = useState(null);
 
   useEffect(() => {
     dispatch(fetchAddresses());
@@ -22,9 +22,9 @@ const MainPage = () => {
     <Container maxWidth="false" sx={{ bgcolor: '#1C1A19', height: '100vh'}} disableGutters={true}>
       <Grid container sx={{ height: 1 }}>
         <Header />
-        <Map />
+        <Map setMap={setMapLink} />
         <Routes>
-          <Route index element={<OrderForm />} />
+          <Route index element={<OrderForm mapLink={mapLink} />} />
           <Route path="profile" element={<Profile />} />
         </Routes>
       </Grid>
