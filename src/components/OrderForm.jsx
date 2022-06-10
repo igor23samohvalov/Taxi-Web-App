@@ -51,7 +51,11 @@ function OrderForm({ mapLink }) {
   return (
     <Paper 
       className="orderForm"
-      sx={{ width: 0.3, height: 0.5, py: 2, borderRadius: '20px'}}
+      sx={{ 
+        width: { xs: 1, md: 0.3 },
+        height: { xs: 0.5, md: 0.5 },
+        borderRadius: { xs: 0, md: '20px' },
+      }}
       elevation={6}
     >
       <Box 

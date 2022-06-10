@@ -46,8 +46,6 @@ code {
   position: absolute;
   top: 30%;
   left: 25%;
-  width: 50%;
-  height: 40%;
 }
 
 .active {
@@ -60,6 +58,25 @@ a {
   color: #fff;
 }
 
+.mobileLink {
+  color: #1B1A18;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .opacity {
   opacity: 0.6;
+}
+
+@media (max-width: 1240px) {
+  .orderForm {
+    left: 0;
+    top: auto;
+    bottom: 0;
+  }
+  .profileForm {
+    position: absolute;
+    left: 5%;
+    top: 10%;
+  }
 }

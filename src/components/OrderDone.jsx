@@ -6,10 +6,21 @@ function OrderDone() {
   return (
     <Paper 
       className="orderForm"
-      sx={{ width: 0.3, height: 0.2, p: 3, borderRadius: '20px'}}
+      sx={{ 
+        width: { xs: 1, md: 0.3 },
+        height: { xs: 0.3, md: 0.3 },
+        borderRadius: { xs: 0, md: '20px' },
+      }}
+      
       elevation={6}
     >
-      <Grid container textAlign="left" flexDirection="column" justifyContent="space-evenly" sx={{ height: 1 }}>
+      <Grid
+        container
+        textAlign="left"
+        flexDirection="column"
+        justifyContent="space-evenly"
+        sx={{ height: 1, px: 5 }}
+      >
         <Typography variant="h4">Заказ размещен</Typography>
         <Typography variant="body1">
           Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.

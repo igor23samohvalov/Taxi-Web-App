@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 const Layout = () => {
   return (
-    <Container maxWidth="false" sx={{ bgcolor: '#1C1A19', height: '100vh'}} disableGutters={true}>
+    <Container maxWidth="false" sx={{ height: '100vh' }} disableGutters={true}>
       <Outlet />
     </Container>
   )

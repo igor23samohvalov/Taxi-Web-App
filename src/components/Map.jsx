@@ -36,7 +36,13 @@ function Map({ setMap }) {
   });
 
   return (
-    <Box ref={mapContainer} sx={{ width: 1, height: 0.925, bgcolor: '#eeeee4' }} />
+    <Box 
+      ref={mapContainer} 
+      sx={{ 
+        width: 1,
+        height: { xs: 1, md: 0.925},
+        bgcolor: '#eeeee4' }}
+    />
   )
 }
 

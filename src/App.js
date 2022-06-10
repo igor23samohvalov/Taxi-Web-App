@@ -4,7 +4,7 @@ import MainPage from './pages/MainPage';
 import RequireAuth from './hoc/RequireAuth.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import LoginForm from './components/LoginForm.jsx';
-import SignupForm from './components/signupForm.jsx';
+import SignupForm from './components/SignupForm.jsx';
 
 const App = () => {
 

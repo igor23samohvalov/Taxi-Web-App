@@ -46,7 +46,10 @@ function LoginForm() {
         justifyContent: 'space-evenly',
         flexDirection: 'column',
         alignItems: 'center',
-        px: 10,
+        px: {
+          xs: 5,
+          md: 8,
+        },
         height: 1
       }}
       onSubmit={formik.handleSubmit}
@@ -93,7 +96,8 @@ function LoginForm() {
       >
         Войти
       </Button>
-      <Typography variant="body1">Новый пользователь? 
+      <Typography variant="body1" sx={{ alignSelf: 'flex-start' }}>Новый пользователь?
+        <br />
         <Link to="/signup" style={{ color: "#FDBF5A", textDecoration: "none" }}>
           Зарегистрируйтесь
         </Link>

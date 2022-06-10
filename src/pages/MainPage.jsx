@@ -19,7 +19,7 @@ const MainPage = () => {
   }, [dispatch]);
 
   return (
-    <Container maxWidth="false" sx={{ bgcolor: '#1C1A19', height: '100vh'}} disableGutters={true}>
+    <Container maxWidth="false" sx={{ height: '100vh', bgcolor: 'transparent' }} disableGutters={true}>
       <Grid container sx={{ height: 1 }}>
         <Header />
         <Map setMap={setMapLink} />

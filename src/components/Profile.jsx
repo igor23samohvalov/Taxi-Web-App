@@ -71,7 +71,15 @@ function Profile() {
   if (isProfileSaved) return <ProfileSuccess />
 
   return (
-    <Paper className="profileForm" sx={{ py: 3, px: 2, borderRadius: '10px' }}>
+    <Paper className="profileForm" 
+      sx={{
+        py: 3,
+        px: 2,
+        borderRadius: '10px',
+        width: { xs: 0.83, md: 0.5 },
+        height: { xs: 0.7, md: 0.4 },
+      }}
+    >
       <Grid container spacing={2} justifyContent="center" alignContent="center" sx={{ height: 1 }}>
         <Grid item xs={12} textAlign="center" sx={{ height: 0.2 }}>
           <Typography variant="h4">Профиль</Typography>
@@ -90,7 +98,7 @@ function Profile() {
             }}
             onSubmit={formik.handleSubmit}
           >
-            <Grid container item spacing={2} xs={5}>
+            <Grid container item spacing={2} xs={12} md={5}>
               <Grid item xs={12}>
                 <TextField
                   id="cardName"
@@ -142,8 +150,25 @@ function Profile() {
                 />
               </Grid>
             </Grid>
-            <Grid container item xs={6} alignContent="center" justifyContent="center" sx={{ height: 0.8 }}>
-              <Paper elevation={6} sx={{ height: 0.7, width: 0.7, py: 2, px: 3, borderRadius: '10px' }}>
+            <Grid 
+              container
+              item
+              xs={12}
+              md={6}
+              alignContent="center"
+              justifyContent="center"
+              sx={{ height: { xs: 0.5, md: 0.8 } }}
+            >
+              <Paper 
+                elevation={6}
+                sx={{ 
+                  height: { xs: 0.55, md: 0.7 },
+                  width: { xs: 1, md: 0.7 },
+                  py: 2,
+                  px: 3,
+                  borderRadius: '10px'
+                }}
+              >
                 <Grid container justifyContent="space-between" sx={{ height: 1 }}>
                   <Grid item container xs={12} justifyContent="space-between">
                     <img src={profileLogo} alt="Taxi Logo" width="33px" height="33px" />
@@ -159,14 +184,13 @@ function Profile() {
                 </Grid>
               </Paper>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={8} md={3}>
               <Button
                 sx={{ 
                   borderRadius: '40px',
                   fontSize: '16px',
                   fontWeight: 'bold',
                   bgcolor: '#FDBF5A',
-                  px: '20px',
                   '&:hover': {
                     backgroundColor: '#FFA842',
                   },
