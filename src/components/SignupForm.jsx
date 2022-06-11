@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
+import SubmittingButton from './SubmittingButton.jsx';
 
 const validationSchema = yup.object({
   email: yup
@@ -34,7 +35,7 @@ function SignupForm() {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(formik.errors.email)
+      formik.setSubmitting(true);
       axios({
         method: 'post',
         url: 'https://loft-taxi.glitch.me/register',
@@ -46,16 +47,17 @@ function SignupForm() {
       .then((response) => {
         if (!response.data.success) {
           formik.setFieldError('email', response.data.error)
+          formik.setSubmitting(false);
         } else {
           localStorage.setItem('token', JSON.stringify(response.data.token))
           navigate('/')
         }
       })
-      .catch((error) => {
-        console.log(error.message)
-        formik.setFieldError('password', 'Ошибка сети')
-      })
-    },
+      .catch(() => {
+        formik.setFieldError('email', 'Ошибка сети');
+        formik.setSubmitting(false);
+      });
+    }
   });
 
   return (
@@ -124,22 +126,27 @@ function SignupForm() {
           fullWidth
         />
       </div>
-      <Button
-        sx={{
-          borderRadius: '40px',
-          fontSize: '16px',
-          fontWeight: 'bold',
-          bgcolor: '#FDBF5A',
-          '&:hover': {
-            backgroundColor: '#FFA842',
-          }
-        }}
-        variant="contained"
-        type="submit"
-        fullWidth
-      >
-        Зарегистрироваться
-      </Button>
+      {formik.isSubmitting ? (
+        <SubmittingButton />
+      ) : (
+        <Button
+          sx={{
+            borderRadius: '40px',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            bgcolor: '#FDBF5A',
+            '&:hover': {
+              backgroundColor: '#FFA842',
+            }
+          }}
+          variant="contained"
+          type="submit"
+          fullWidth
+        >
+          Зарегистрироваться
+        </Button>
+      )}
+      
       <Typography variant="body1" sx={{ alignSelf: 'flex-start' }}>Уже зарегистрированы?
         <br />
         <Link to="/" style={{ color: "#FDBF5A", textDecoration: "none" }}>

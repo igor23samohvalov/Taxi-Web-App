@@ -10,6 +10,7 @@ import { actions } from '../slices/cardDataSlice.js';
 import profileLogo from '../assets/images/subtract-profile.png';
 import profileVisa from '../assets/images/visa-profile.png';
 import ProfileSuccess from './ProfileSuccess.jsx';
+import SubmittingButton from './SubmittingButton.jsx';
 
 const validationSchema = yup.object({
   cardName: yup
@@ -63,7 +64,8 @@ function Profile() {
         dispatch(actions.setCardData(values));
         setProfileSaved(true);
       } catch (error) {
-        console.log(error.message)
+        formik.setFieldError('cardName', 'Ошибка сети')
+        formik.setSubmitting(false);
       }
     }
   })
@@ -185,22 +187,26 @@ function Profile() {
               </Paper>
             </Grid>
             <Grid item xs={8} md={3}>
-              <Button
-                sx={{ 
-                  borderRadius: '40px',
-                  fontSize: '16px',
-                  fontWeight: 'bold',
-                  bgcolor: '#FDBF5A',
-                  '&:hover': {
-                    backgroundColor: '#FFA842',
-                  },
-                }}
-                variant="contained"
-                type="submit"
-                fullWidth
-              >
-                Сохранить
-              </Button>
+              {formik.isSubmitting ? (
+                <SubmittingButton />
+              ) : (
+                <Button
+                  sx={{ 
+                    borderRadius: '40px',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    bgcolor: '#FDBF5A',
+                    '&:hover': {
+                      backgroundColor: '#FFA842',
+                    },
+                  }}
+                  variant="contained"
+                  type="submit"
+                  fullWidth
+                >
+                  Сохранить
+                </Button>
+              )}
             </Grid>
           </Box>
         </Grid>

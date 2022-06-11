@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Drawer,
   List,
@@ -53,6 +54,10 @@ function MobileToolbar ({ logOut }) {
       </IconButton>
     </>
   )
+}
+
+Map.propTypes = {
+  logOut: PropTypes.func,
 }
 
 export default MobileToolbar;

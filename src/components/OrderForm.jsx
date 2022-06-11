@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Box, Button, TextField, Paper, Grid, MenuItem,
 } from '@mui/material';
@@ -10,6 +11,7 @@ import standartCar from '../assets/images/card-standart.png';
 import premiumCar from '../assets/images/car-premium.png';
 import { drawRoute } from '../utilityFns/drawRoute';
 import OrderDone from './OrderDone.jsx';
+import SubmittingButton from './SubmittingButton.jsx';
 
 const carOptions = [
   {
@@ -41,10 +43,15 @@ function OrderForm({ mapLink }) {
       whereTo: '',
     },
     onSubmit: async ({ whereFrom, whereTo}) => {
-      const response = await axios.get(`https://loft-taxi.glitch.me/route?address1=${whereFrom}&address2=${whereTo}`);
-      drawRoute(mapLink, response.data);
-      setOrderDone(true);
-    }
+      try {
+        const response = await axios.get(`https://loft-taxi.glitch.me/route?address1=${whereFrom}&address2=${whereTo}`);
+        drawRoute(mapLink, response.data);
+        setOrderDone(true);
+      } catch (err) {
+        formik.setFieldError('whereFrom', 'Ошибка сети')
+        formik.setSubmitting(false);
+      }
+    },
   })
   if (isOrderDone) return <OrderDone />
 
@@ -79,6 +86,8 @@ function OrderForm({ mapLink }) {
           onChange={formik.handleChange}
           variant="standard"
           fullWidth
+          error={Boolean(formik.errors.whereFrom)}
+          helperText={formik.errors.whereFrom}
         >
           {addresses.map((address, i) => (
             <MenuItem key={i} value={address}>
@@ -118,27 +127,33 @@ function OrderForm({ mapLink }) {
             </Paper>
           ))}
         </Grid>
-        <Button
-          variant="contained"
-          type="submit"
-          sx={{
-            borderRadius: '40px',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            bgcolor: '#FDBF5A',
-            '&:hover': {
-              backgroundColor: '#FFA842',
-            },
-            py: '15px',
-          }}
-          fullWidth
-        >
-          Заказать
-        </Button>
+        {formik.isSubmitting ? (
+          <SubmittingButton />
+        ) : (
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{
+              borderRadius: '40px',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              bgcolor: '#FDBF5A',
+              '&:hover': {
+                backgroundColor: '#FFA842',
+              },
+            }}
+            fullWidth
+          >
+            Заказать
+          </Button>
+        )}
       </Box>
     </Paper>
-    
   )
+}
+
+OrderForm.propTypes = {
+  mapLink: PropTypes.object,
 }
 
 export default OrderForm

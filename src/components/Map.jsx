@@ -1,5 +1,6 @@
-import { Box } from '@mui/material';
 import React, { useRef, useEffect, useState } from 'react';
+import PropTypes from 'prop-types'
+import { Box } from '@mui/material';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
 
@@ -44,6 +45,10 @@ function Map({ setMap }) {
         bgcolor: '#eeeee4' }}
     />
   )
+}
+
+Map.propTypes = {
+  setMap: PropTypes.func,
 }
 
 export default Map

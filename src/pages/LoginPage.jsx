@@ -26,7 +26,7 @@ function LoginPage() {
         <Grid item container className='loginpage-container' xs={12} md={8} justifyContent="center" alignContent="center">
             <Paper 
               sx={{
-                width: { xs: 0.9, md: 0.5 },
+                width: { xs: 0.9, md: 0.45 },
                 height: { xs: 0.5, md: 0.4 },
                 py: { xs: 2, md: 5 },
                 borderRadius: '20px',

@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
+import SubmittingButton from './SubmittingButton.jsx';
 
 const validationSchema = yup.object({
   username: yup
@@ -35,6 +36,10 @@ function LoginForm() {
       })
       .then(({ data }) => localStorage.setItem('token', JSON.stringify(data.token)))
       .then(() => navigate('/main'))
+      .catch((err) => {
+        formik.setFieldError('username', 'Ошибка сети')
+        formik.setSubmitting(false);
+      })
     },
   });
 
@@ -80,22 +85,26 @@ function LoginForm() {
           fullWidth 
         />
       </div>
-      <Button 
-        variant="contained"
-        type="submit"
-        sx={{
-          borderRadius: '40px',
-          fontSize: '16px',
-          fontWeight: 'bold',
-          bgcolor: '#FDBF5A',
-          '&:hover': {
-            backgroundColor: '#FFA842',
-          }
-        }}
-        fullWidth
-      >
-        Войти
-      </Button>
+      {formik.isSubmitting ? (
+        <SubmittingButton />
+      ) : (
+        <Button 
+          variant="contained"
+          type="submit"
+          sx={{
+            borderRadius: '40px',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            bgcolor: '#FDBF5A',
+            '&:hover': {
+              backgroundColor: '#FFA842',
+            }
+          }}
+          fullWidth
+        >
+          Войти
+        </Button>
+      )}
       <Typography variant="body1" sx={{ alignSelf: 'flex-start' }}>Новый пользователь?
         <br />
         <Link to="/signup" style={{ color: "#FDBF5A", textDecoration: "none" }}>
