@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Box, Button, TextField, Paper, Grid, MenuItem,
 } from '@mui/material';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import buisnessCar from '../assets/images/car-buiseness.png';
 import standartCar from '../assets/images/card-standart.png';
@@ -12,6 +11,7 @@ import premiumCar from '../assets/images/car-premium.png';
 import { drawRoute } from '../utilityFns/drawRoute';
 import OrderDone from './OrderDone.jsx';
 import SubmittingButton from './SubmittingButton.jsx';
+import { useSelector } from 'react-redux';
 
 const carOptions = [
   {
@@ -36,6 +36,13 @@ function OrderForm({ mapLink }) {
   const addresses = useSelector((state) => state.addresses.addresses);
   const [activeCar, setActiveCar] = useState(0);
   const [isOrderDone, setOrderDone] = useState(false);
+  const [whereFromMenus, setWhereFrom] = useState(addresses);
+  const [whereToMenus, setWhereTo] = useState(addresses);
+
+  useEffect(() => {
+    setWhereFrom(addresses);
+    setWhereTo(addresses);
+  }, [addresses])
 
   const formik = useFormik({
     initialValues: {
@@ -54,6 +61,15 @@ function OrderForm({ mapLink }) {
     },
   })
   if (isOrderDone) return <OrderDone />
+
+  const handleChange = (e) => {
+    if (e.target.name === 'whereFrom') {
+      setWhereTo(addresses.filter((m) => m !== e.target.value));
+    } else {
+      setWhereFrom(addresses.filter((m) => m !== e.target.value));
+    }
+    formik.handleChange(e);
+  }
 
   return (
     <Paper 
@@ -83,13 +99,13 @@ function OrderForm({ mapLink }) {
           select
           label="Откуда"
           value={formik.values.whereFrom}
-          onChange={formik.handleChange}
+          onChange={(e) => handleChange(e)}
           variant="standard"
           fullWidth
           error={Boolean(formik.errors.whereFrom)}
           helperText={formik.errors.whereFrom}
         >
-          {addresses.map((address, i) => (
+          {whereFromMenus.map((address, i) => (
             <MenuItem key={i} value={address}>
               {address}
             </MenuItem>
@@ -101,11 +117,11 @@ function OrderForm({ mapLink }) {
           select
           label='Куда'
           value={formik.values.whereTo}
-          onChange={formik.handleChange}
+          onChange={(e) => handleChange(e)}
           variant="standard"
           fullWidth
         >
-          {addresses.map((address, i) => (
+          {whereToMenus.map((address, i) => (
             <MenuItem key={i} value={address}>
               {address}
             </MenuItem>

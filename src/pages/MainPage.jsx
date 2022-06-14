@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Container } from '@mui/material';
-import { fetchAddresses } from '../slices/addressesSlice';
-import { fetchCardData } from '../slices/cardDataSlice';
+import { fetchAddresses } from '../slices/addressesSlice.js';
+import { fetchCardData } from '../slices/cardDataSlice.js';
 import Header from '../components/Header.jsx';
 import Map from '../components/Map.jsx';
 import { useDispatch } from 'react-redux';

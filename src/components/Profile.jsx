@@ -28,23 +28,35 @@ const validationSchema = yup.object({
 });
 
 const formatDate = (date = '0000') => `${date.slice(0, 2)}/${date.slice(2)}`;
+const formatNumber = (string, chunkSize) => {
+  string = String(string);
+  const result = [];
+  for (let i = 0; i < string.length; i += chunkSize) {
+    result.push(string.slice(i, chunkSize + i))
+  }
+
+  return result.join(' ');
+};
+
+
+const getInitialValues = (data) => {
+  if (Object.keys(data).length === 0) data = {
+    cardNumber: '',
+    expiryDate: '0000',
+    cardName: '',
+    cvc: '',
+  }
+
+  return data;
+}
 
 function Profile() {
   const dispatch = useDispatch();
-  const {
-    cardName, expiryDate, cardNumber, cvc
-  } = useSelector((state) => state.cardData.cardData);
-  const formattedDate = formatDate(expiryDate);
-
+  const data = useSelector((state) => state.cardData.cardData);
   const [isProfileSaved, setProfileSaved] = useState(false);
 
   const formik = useFormik({
-    initialValues: {
-      cardName: cardName,
-      cardNumber: cardNumber,
-      expiryDate: formattedDate,
-      cvc: cvc,
-    },
+    initialValues: getInitialValues(data),
     enableReinitialize: true,
     validationSchema,
     onSubmit: async (values) => {
@@ -118,12 +130,12 @@ function Profile() {
                 <TextField
                   id="cardNumber"
                   label="Номер карты"
+                  inputProps={{ maxLength: 16 }}
                   value={formik.values.cardNumber}
                   onChange={formik.handleChange}
                   error={formik.touched.cardNumber && Boolean(formik.errors.cardNumber)}
                   helperText={formik.touched.cardNumber && formik.errors.cardNumber}
                   variant="standard"
-                  type="number"
                   fullWidth
                 />
               </Grid>
@@ -131,6 +143,7 @@ function Profile() {
                 <TextField
                   id="expiryDate"
                   label="MM/YY"
+                  inputProps={{ maxLength: 4 }}
                   value={formik.values.expiryDate}
                   onChange={formik.handleChange}
                   error={formik.touched.expiryDate && Boolean(formik.errors.expiryDate)}
@@ -143,6 +156,7 @@ function Profile() {
                 <TextField
                   id="cvc"
                   label="cvc"
+                  inputProps={{ maxLength: 3 }}
                   value={formik.values.cvc}
                   onChange={formik.handleChange}
                   error={formik.touched.cvc && Boolean(formik.errors.cvc)}
@@ -174,10 +188,10 @@ function Profile() {
                 <Grid container justifyContent="space-between" sx={{ height: 1 }}>
                   <Grid item container xs={12} justifyContent="space-between">
                     <img src={profileLogo} alt="Taxi Logo" width="33px" height="33px" />
-                    <span>{formik.values.expiryDate}</span>
+                    <span>{formatDate(formik.values.expiryDate)}</span>
                   </Grid>
                   <Grid item xs={12} justifyContent="flex-start" alignSelf="center">
-                    {formik.values.cardNumber}
+                    {formatNumber(formik.values.cardNumber, 4)}
                   </Grid>
                   <Grid item container xs={12} justifyContent="space-between" alignSelf="flex-end">
                   <img src={profileVisa} alt="Visa Logo" />

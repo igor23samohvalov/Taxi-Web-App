@@ -8,7 +8,7 @@ import SubmittingButton from './SubmittingButton.jsx';
 
 const validationSchema = yup.object({
   email: yup
-    .string('Email to be a string')
+    .string('Supposed to be a string')
     .email('Invalid email address')
     .required('Email is required'),
   name: yup
@@ -44,17 +44,17 @@ function SignupForm() {
         },
         data: JSON.stringify(values),
       })
-      .then((response) => {
-        if (!response.data.success) {
-          formik.setFieldError('email', response.data.error)
-          formik.setSubmitting(false);
-        } else {
-          localStorage.setItem('token', JSON.stringify(response.data.token))
+      .then(({ data}) => {
+        if (data.success) {
+          localStorage.setItem('token', JSON.stringify(data.token))
           navigate('/')
+        } else {
+          formik.setSubmitting(false);
+          throw new Error(data.error)
         }
       })
-      .catch(() => {
-        formik.setFieldError('email', 'Ошибка сети');
+      .catch((err = { message: 'Ошибка сети'}) => {
+        formik.setFieldError('email', err.message);
         formik.setSubmitting(false);
       });
     }

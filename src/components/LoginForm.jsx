@@ -7,9 +7,10 @@ import axios from 'axios';
 import SubmittingButton from './SubmittingButton.jsx';
 
 const validationSchema = yup.object({
-  username: yup
+  email: yup
     .string('Supposed to be a string')
-    .required('Username is required'),
+    .email('Invalid email address')
+    .required('Email is required'),
   password: yup
     .string('Password must be a string')
     .required('Password is required'),
@@ -20,24 +21,26 @@ function LoginForm() {
 
   const formik = useFormik({
     initialValues: {
-      username: '',
+      email: '',
       password: '',
     },
     validationSchema,
-    onSubmit: () => {
-      const auth = {email: 'email@example.com', password: 'password'}
+    onSubmit: (values) => {
       axios({
         method: 'post',
         url: 'https://loft-taxi.glitch.me/auth',
         headers: {
             'Content-Type': 'application/json'
         },
-        data: JSON.stringify(auth),
+        data: JSON.stringify(values),
       })
-      .then(({ data }) => localStorage.setItem('token', JSON.stringify(data.token)))
+      .then(({ data }) => {
+        if (data.success) localStorage.setItem('token', JSON.stringify(data.token))
+        else throw new Error(data.error)
+      })
       .then(() => navigate('/main'))
       .catch((err) => {
-        formik.setFieldError('username', 'Ошибка сети')
+        formik.setFieldError('email', err.message)
         formik.setSubmitting(false);
       })
     },
@@ -62,18 +65,19 @@ function LoginForm() {
       <Typography variant="h4">Войти</Typography>
       <div style={{ width: '100%' }}>
         <TextField 
-          id="username"
-          label="Имя пользователя"
+          name="email"
+          label="Email"
           variant="standard"
           margin="dense"
-          value={formik.values.username}
+          type="email"
+          value={formik.values.email}
           onChange={formik.handleChange}
-          error={formik.touched.username && Boolean(formik.errors.username)}
-          helperText={formik.touched.username && formik.errors.username}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
           fullWidth
         />
         <TextField
-          id="password"
+          name="password"
           label="Пароль"
           variant="standard"
           margin="dense"

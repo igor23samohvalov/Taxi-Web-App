@@ -5,14 +5,19 @@ export const fetchCardData = createAsyncThunk(
   'cardData/fetchCardData',
   async () => {
     try {
-      // const token = localStorage.getItem('token');
-      const response = await axios.get(`https://loft-taxi.glitch.me/card?token=AUTH_TOKEN`);
-
-      if (response.status !== 200) throw new Error(`Response Error, code: ${response.status}`)
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`https://loft-taxi.glitch.me/card?token=${token}`);
+      if (!response.data.success) throw new Error(response.data.success.error)
 
       return response.data;
     } catch (error) {
-      console.log(error.message)
+
+      return {
+        cardNumber: "",
+        expiryDate: "0000",
+        cardName: "",
+        cvc: "",
+      }
     }
   }
 )
